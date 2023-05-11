@@ -1,0 +1,122 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/** 
+  For ol
+*/
+.ol-map { position: relative; }
+
+/* .ol-horizontal-container {
+  position: absolute;
+  top: 0.5em; left: calc(1.875em + 4px); right: calc(1.875em + 4px);
+  z-index: 99;
+  display: flex; flex-direction: row;
+  justify-content: end;
+  box-sizing: border-box;
+} */
+/* .ol-vertical-container {
+  position: absolute;
+  top: calc(1.875em + 4px); bottom: calc(1.875em + 4px); right: 0.5em;
+  z-index: 99;
+  display: flex; flex-direction: column;
+  box-sizing: border-box;
+} */
+
+/* .ol-control-set {
+  position: unset !important;
+  display: inherit;
+  flex-direction: inherit;
+} */
+/* .ol-horizontal-container > .ol-control-set {
+  margin-right: 0.5em;
+}
+.ol-vertical-container > .ol-control-set {
+  margin-top: 0.5em;
+} */
+
+/**
+  For ol custom controls
+  커스텀 컨트롤 버튼 위치 잡기용
+*/
+.ol-control .active {
+  background-color: rgba(96, 197, 163, 0.6);
+}
+.ol-measurement {
+  top: 2.375em;
+  right: 0.5em;
+}
+.ol-measurement .ol-measurement-distance {
+  /* border-radius: 2px 2px 0 0; */
+}
+.ol-measurement .ol-measurement-area {
+  /* border-radius: 0 0 2px 2px; */
+}
+
+/**
+  For ol tooltip
+*/
+.ol-tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+  font-size: 12px;
+  cursor: default;
+  user-select: none;
+}
+
+/* 거리 측정 결과 등 맵에 박힌 경우우 */
+.ol-tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  /* border: 1px solid white; */
+}
+
+/* 거리/면적 측정 시 */
+.ol-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
