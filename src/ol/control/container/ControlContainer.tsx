@@ -9,13 +9,6 @@ const ControlContainer: FC<Props> = ({ children }) => {
 
   const { map } = useContext(OLContext);
 
-  const [active, setActive] = useState()
-
-  useEffect(() => {
-    if (!map) return
-
-  }, [map])
-  
   return (
     <div>
       {children}

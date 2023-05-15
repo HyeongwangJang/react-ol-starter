@@ -32,9 +32,15 @@ const Example01 = () => {
           <FullScreenControl />
           <MeasurementControl options={{
             useTooltip: true,
+            useControlSet: true,
+            controlId: 'measurement-control',
+            setId: 'set-1',
           }} />
           <InquiryControl options={{
             useTooltip: true,
+            useControlSet: true,
+            controlId: 'inquiry-control',
+            setId: 'set-1',
           }} />
         </ControlContainer>
       </Map>

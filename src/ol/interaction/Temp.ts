@@ -42,6 +42,8 @@ class Temp extends PointerInteraction {
 
   private type_: 'Point' | 'Polygon'
 
+  draw: Draw;
+
   private freehand_ = true;
 
   declare on: TempSignature<EventsKey>;
@@ -62,15 +64,15 @@ class Temp extends PointerInteraction {
 
       const self = this;
 
-      const draw = new Draw({
+      this.draw = new Draw({
         type: this.type_,
       })
-      this.getMap().addInteraction(draw);
+      this.getMap().addInteraction(this.draw);
 
-      draw.on('drawend', function (drawEvt) {
+      this.draw.on('drawend', function (drawEvt) {
         if (self.type_ === 'Point') {
 
-          self.getMap().removeInteraction(draw);
+          self.getMap().removeInteraction(self.draw);
 
           self.dispatchEvent(
             new TempEvent(TempEventType.TEMPEND, '포인트 선택')
@@ -79,7 +81,7 @@ class Temp extends PointerInteraction {
           const polygon = drawEvt.feature.getGeometry();
           const extent = polygon.getExtent();
 
-          self.getMap().removeInteraction(draw);
+          self.getMap().removeInteraction(self.draw);
 
           self.dispatchEvent(
             new TempEvent(TempEventType.TEMPEND, '면적 선택')

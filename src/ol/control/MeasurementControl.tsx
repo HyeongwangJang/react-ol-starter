@@ -19,7 +19,7 @@ import OLContext from '../OLContext';
 import { getLayerById } from '../util';
 
 type Props = {
-  options?: Omit<Options, 'map'>
+  options?: Options
 }
 
 // @ts-ignore
@@ -29,14 +29,7 @@ const MeasurementControl: FC<Props> = ({ options }) => {
   useEffect(() => {
     if (!map) return;
 
-    /**
-     * tooltip을 사용할 경우, options에 map 추가 필요.
-     * line 23* 부근, if(options.useTooltip) 안에서 map 객체에 접근해야 하는데
-     * constructor안에서는 this.getMap()을 사용할 수 없음
-     */
-    if(options.useTooltip) {
-      (options as Options).map = map
-    }
+    (options as Options).map = map
 
     const control = new Measurement(options);
 
@@ -70,7 +63,14 @@ type Options = {
   useEraser?: boolean
   useTooltip?: boolean
   map?: Map
-}
+} & ControlSetOptions
+
+/**
+ * 설명....
+ */
+type ControlSetOptions =
+  { useControlSet?: true; controlId: string; setId: string }
+  | { useControlSet?: false }
 
 /**
  * @classdesc
@@ -80,6 +80,8 @@ type Options = {
  */
 class Measurement extends Control {
 
+  private id_: string;
+  
   private mdButton_: HTMLElement;
 
   private maButton_: HTMLElement;
@@ -132,6 +134,13 @@ class Measurement extends Control {
   private draw_: Draw
 
   private status_: 'distance_measureing' | 'area_measureing' | 'none';
+
+  private useControlSet_ = false;
+
+  /**
+   * 세트명(아이디)
+   */
+  private setId_: string;
 
   constructor(options: Options) {
     options = options ? options : {};    
@@ -244,6 +253,14 @@ class Measurement extends Control {
           && this.helpTooltipElement_.classList.add('hidden');
       });
     }
+
+    if(options.useControlSet) {
+      this.set('set', options.setId);
+      this.set('id', options.controlId)
+      this.useControlSet_ = options.useControlSet
+      this.id_ = options.controlId;
+      this.setId_ = options.setId
+    }
   }
 
   /**
@@ -251,6 +268,11 @@ class Measurement extends Control {
    */
   private handleMdClick_(event: MouseEvent) {
     event.preventDefault();
+
+    if(this.useControlSet_) {
+      const multiple = this.checkMultiple_();
+      if(multiple) return;
+    }
     
     this.getMap().removeInteraction(this.draw_);
 
@@ -259,11 +281,13 @@ class Measurement extends Control {
       this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
       this.helpTooltipElement_ = null;
       this.mdButton_.classList.remove('active')
+      this.set('active', false)
       return;
     }
     
     this.addInteraction_('distance');
     this.status_ = 'distance_measureing'
+    this.set('active', true);
     this.maButton_.classList.remove('active')
     this.mdButton_.classList.add('active')
   }
@@ -273,6 +297,11 @@ class Measurement extends Control {
    */
   private handleMaClick_(event: MouseEvent) {
     event.preventDefault();
+
+    if(this.useControlSet_) {
+      const multiple = this.checkMultiple_();
+      if(multiple) return;
+    }
     
     this.getMap().removeInteraction(this.draw_);
     
@@ -282,6 +311,7 @@ class Measurement extends Control {
       this.maButton_.classList.remove('active')
       this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
       this.helpTooltipElement_ = null;
+      this.set('active', false)
       return;
     }
 
@@ -289,6 +319,7 @@ class Measurement extends Control {
     this.status_ = 'area_measureing'
     this.mdButton_.classList.remove('active')
     this.maButton_.classList.add('active')
+    this.set('active', true)
   }
 
   /**
@@ -308,6 +339,24 @@ class Measurement extends Control {
     tooltips.forEach(tooltip => {
       tooltip.parentNode.removeChild(tooltip)
     })
+  }
+
+  /**
+   * 기존의 사용중인 컨트롤이 있는지 검사
+   */
+  private checkMultiple_() {
+    let multiple = false;
+    this.getMap().getControls().forEach((control) => {
+      if(control instanceof Control) {
+        if(control.get('set') === this.setId_ && control.get('id') !== this.id_) {
+          if(control.get('active')) {
+            return multiple = true
+          }
+        }
+      }
+    })
+
+    return multiple;
   }
 
   /**

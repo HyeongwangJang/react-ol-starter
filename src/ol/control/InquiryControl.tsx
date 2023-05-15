@@ -48,7 +48,15 @@ type Options = {
   useTooltip?: boolean
   map?: Map
   stopClick?: boolean
-}
+} & ControlSetOptions
+
+
+/**
+ * 설명....
+ */
+type ControlSetOptions =
+  { useControlSet?: true; controlId: string; setId: string }
+  | { useControlSet?: false }
 
 /**
  * @classdesc
@@ -57,6 +65,8 @@ type Options = {
 class Inquiry extends Control {
 
   // inquiryEvent: Subject<number>;
+
+  private id_: string;
 
   private usePoint_: boolean;
 
@@ -77,6 +87,13 @@ class Inquiry extends Control {
   private status_: 'point_inquirying' | 'area_inquirying' | 'none'
 
   private dbclickzoom_: DoubleClickZoom;
+
+  private useControlSet_ = false;
+
+  /**
+   * 세트명(아이디)
+   */
+  private set_: string;
 
   constructor(options: Options) {
     options = options ? options : {};
@@ -166,6 +183,14 @@ class Inquiry extends Control {
           && this.helpTooltipElement_.classList.add('hidden');
       });
     }
+
+    if(options.useControlSet) {
+      this.set('set', options.setId)
+      this.set('id', options.controlId)
+      this.useControlSet_ = options.useControlSet
+      this.id_ = options.controlId
+      this.set_ = options.setId
+    }
   }
 
   /**
@@ -188,16 +213,30 @@ class Inquiry extends Control {
    */
   private handlePiClick_(event: MouseEvent) {
     event.preventDefault();
+
+    if(this.useControlSet_) {
+      const multiple = this.checkMultiple_();
+      console.log('CHECK MULTIPLE ?', multiple);
+      
+      if(multiple) return;
+    }
+
+    this.getMap().removeInteraction(this.interaction_?.draw);
     this.getMap().removeInteraction(this.interaction_);
 
     if(this.status_ === 'point_inquirying') {
       this.status_ = 'none';
       this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
       this.helpTooltipElement_ = null;
+      this.piButton_.classList.remove('active')
+      this.set('active', false)
       return;
     }
     this.addInteraction_('point');
     this.status_ = 'point_inquirying';
+    this.aiButton_.classList.remove('active')
+    this.piButton_.classList.add('active')
+    this.set('active', true)
 
     this.getMap().getInteractions().forEach((interaction) => {
       if(interaction instanceof DoubleClickZoom) {
@@ -214,16 +253,28 @@ class Inquiry extends Control {
    */
   private handleAiClick_(event: MouseEvent) {
     event.preventDefault();
-    this.getMap().removeInteraction(this.interaction_);
 
+    if(this.useControlSet_) {
+      const multiple = this.checkMultiple_();
+      if(multiple) return;
+    }
+
+    this.getMap().removeInteraction(this.interaction_?.draw);
+    this.getMap().removeInteraction(this.interaction_);
+    
     if(this.status_ === 'area_inquirying') {
       this.status_ = 'none';
       this.helpTooltipElement_.parentNode.removeChild(this.helpTooltipElement_);
       this.helpTooltipElement_ = null;
+      this.aiButton_.classList.remove('active')
+      this.set('active', false)
       return;
     }
     this.addInteraction_('area');
     this.status_ = 'area_inquirying';
+    this.piButton_.classList.remove('active')
+    this.aiButton_.classList.add('active')
+    this.set('active', true)
 
     this.getMap().getInteractions().forEach((interaction) => {
       if(interaction instanceof DoubleClickZoom) {
@@ -233,6 +284,27 @@ class Inquiry extends Control {
     if(this.dbclickzoom_) {
       this.getMap().removeInteraction(this.dbclickzoom_)
     }
+  }
+
+  /**
+   * 기존의 사용중인 컨트롤이 있는지 검사
+   */
+  private checkMultiple_() {
+    let multiple = false;
+    this.getMap().getControls().forEach((control) => {
+      if(control instanceof Control) {
+        if(control.get('set') === this.set_ && control.get('id') !== this.id_) {
+          console.log('나는 ㅊ자으면 안된다', control.get('id'));
+          if(control.get('active')) {
+            return multiple = true
+          }
+        }
+      }
+    })
+
+    console.log('CHECK MULTIPLE ==', multiple);
+    
+    return multiple;
   }
 
   private addInteraction_(type: 'point' | 'area') {
@@ -251,6 +323,9 @@ class Inquiry extends Control {
       self.helpTooltipElement_.parentNode.removeChild(self.helpTooltipElement_);
       self.helpTooltipElement_ = null;
       self.getMap().removeInteraction(self.interaction_)
+      self.set('active', false)
+      self.aiButton_.classList.remove('active');
+      self.piButton_.classList.remove('active');
       if(self.dbclickzoom_) {
         setTimeout(function() {
           self.getMap().addInteraction(self.dbclickzoom_)
