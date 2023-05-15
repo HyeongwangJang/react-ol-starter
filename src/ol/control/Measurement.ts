@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+
 
 import { Feature, Map } from 'ol';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -10,43 +10,14 @@ import { unByKey } from 'ol/Observable';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { CLASS_UNSELECTABLE, CLASS_CONTROL } from 'ol/css'
 import Draw from 'ol/interaction/Draw'
-import Control from "ol/control/Control";
 import EventType from 'ol/events/EventType'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector';
 
-import OLContext from '../OLContext';
 import { getLayerById } from '../util';
 import CustomControl, { ControlSetOptions } from './CustomControl';
 
-type Props = {
-  options?: Options
-}
-
-// @ts-ignore
-const MeasurementControl: FC<Props> = ({ options }) => {
-  const { map } = useContext(OLContext);
-
-  useEffect(() => {
-    if (!map) return;
-
-    (options as Options).map = map
-
-    const control = new Measurement(options);
-
-    map.addControl(control);
-
-    return () => {
-      map.removeControl(control);
-    };
-  }, [map]);
-
-  return null;
-};
-
-export default MeasurementControl;
-
-type Options = {
+export type Options = {
   className?: string
   mdClassName?: string
   maClassName?: string
@@ -488,3 +459,5 @@ class Measurement extends CustomControl {
     this.getMap().addOverlay(this.measureTooltip_);
   }
 }
+
+export default Measurement

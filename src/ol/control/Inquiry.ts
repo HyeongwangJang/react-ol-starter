@@ -1,39 +1,12 @@
-import { FC, useContext, useEffect } from 'react';
-
 import { Map, Overlay, MapBrowserEvent } from 'ol'
 import { DoubleClickZoom } from 'ol/interaction';
 import EventType from 'ol/events/EventType'
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 
-import OLContext from '../OLContext';
 import Temp from '../interaction/Temp';
 import CustomControl, { ControlSetOptions } from './CustomControl';
 
-type Props = {
-  options?: Options
-}
-// @ts-ignore
-const InquiryControl: FC<Props> = ({ options }) => {
-  const { map } = useContext(OLContext);
-
-  useEffect(() => {
-    if (!map) return;
-
-    (options as Options).map = map
-    const control = new Inquiry(options);
-    map.addControl(control);
-    
-    return () => {
-      map.removeControl(control);
-    };
-  }, [map]);
-
-  return null;
-};
-
-export default InquiryControl;
-
-type Options = {
+export type Options = {
   className?: string
   piClassName?: string
   aiClassName?: string
@@ -321,15 +294,4 @@ class Inquiry extends CustomControl {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
+export default Inquiry
