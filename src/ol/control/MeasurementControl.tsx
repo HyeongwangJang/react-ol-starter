@@ -6,7 +6,6 @@ import Overlay from 'ol/Overlay'
 import { EventsKey } from 'ol/events'
 import { LineString, Polygon } from 'ol/geom'
 import { getArea, getLength } from 'ol/sphere';
-import Coordinate from 'ol/coordinate'
 import { unByKey } from 'ol/Observable';
 import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { CLASS_UNSELECTABLE, CLASS_CONTROL } from 'ol/css'
@@ -31,9 +30,9 @@ const MeasurementControl: FC<Props> = ({ options }) => {
     if (!map) return;
 
     /**
-     * tooltip을 사용할 경우에만 options에 map을 추가해주어야 함.
-     * line 200 부근, if(options.useTooltip) 안에서 map 객체에 접근해야 하는데
-     * constructor안에서는 this.getMap()을 사용할 수 없기 때문에 map을 직접 전달할 필요가 있음.
+     * tooltip을 사용할 경우, options에 map 추가 필요.
+     * line 23* 부근, if(options.useTooltip) 안에서 map 객체에 접근해야 하는데
+     * constructor안에서는 this.getMap()을 사용할 수 없음
      */
     if(options.useTooltip) {
       (options as Options).map = map
@@ -314,7 +313,7 @@ class Measurement extends Control {
   /**
    * Handle pointer move.
    */
-  pointerMoveHandler_(evt: MapBrowserEvent<UIEvent>) {    
+  private pointerMoveHandler_(evt: MapBrowserEvent<UIEvent>) {    
     if (evt.dragging || !this.helpTooltipElement_) {
       return;
     }
