@@ -17,7 +17,7 @@ import VectorSource from 'ol/source/Vector';
 
 import OLContext from '../OLContext';
 import { getLayerById } from '../util';
-import CustomControl from './CustomControl';
+import CustomControl, { ControlSetOptions } from './CustomControl';
 
 type Props = {
   options?: Options
@@ -65,13 +65,6 @@ type Options = {
   useTooltip?: boolean
   map?: Map
 } & ControlSetOptions
-
-/**
- * 설명....
- */
-type ControlSetOptions =
-  { useControlSet?: true; controlId: string; setId: string }
-  | { useControlSet?: false }
 
 /**
  * @classdesc

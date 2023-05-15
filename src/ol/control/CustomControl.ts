@@ -1,12 +1,16 @@
 import { Control } from "ol/control";
 
-type Options = {
-  element: HTMLElement,
-  target: string | HTMLElement,
-  useControlSet: boolean,
-  controlId: string,
-  setId: string,
-}
+export type Options = {
+  element: HTMLElement
+  target: string | HTMLElement
+} & ControlSetOptions
+
+/**
+ * controlSet는 ...
+ */
+export type ControlSetOptions =
+  { useControlSet?: true; controlId: string; setId: string }
+  | { useControlSet?: false }
 
 class CustomControl extends Control {
 
@@ -38,7 +42,9 @@ class CustomControl extends Control {
   }
 
   /**
-   * 기존의 사용중인 컨트롤이 있는지 검사
+   * 같은 컨트롤 세트 내에서
+   * 현재 활성화된 컨트롤이 있는지 검사.
+   * 자기 자신은 제외.
    */
   checkMultiple_() {
     let multiple = false;

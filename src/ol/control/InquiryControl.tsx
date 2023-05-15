@@ -3,12 +3,11 @@ import { FC, useContext, useEffect } from 'react';
 import { Map, Overlay, MapBrowserEvent } from 'ol'
 import { DoubleClickZoom } from 'ol/interaction';
 import EventType from 'ol/events/EventType'
-import Control from 'ol/control/Control';
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 
 import OLContext from '../OLContext';
 import Temp from '../interaction/Temp';
-import CustomControl from './CustomControl';
+import CustomControl, { ControlSetOptions } from './CustomControl';
 
 type Props = {
   options?: Options
@@ -51,14 +50,6 @@ type Options = {
   stopClick?: boolean
 } & ControlSetOptions
 
-
-/**
- * 설명....
- */
-type ControlSetOptions =
-  { useControlSet?: true; controlId: string; setId: string }
-  | { useControlSet?: false }
-
 /**
  * @classdesc
  * 참고1: pi = point inquiry / ai = area inquiry의 약자임
@@ -87,14 +78,12 @@ class Inquiry extends CustomControl {
 
   private status_: 'point_inquirying' | 'area_inquirying' | 'none'
 
-  private dbclickzoom_: DoubleClickZoom;
-
-  // private useControlSet_ = false;
-
   /**
-   * 세트명(아이디)
+   * 지역 조회 사용 시,
+   * draw가 끝난 후 dbclickzoom이 발생하여 임의로 비활성화 했다가
+   * 다시 추가해주어야 한다.
    */
-  // private set_: string;
+  private dbclickzoom_: DoubleClickZoom;
 
   constructor(options: Options) {
     options = options ? options : {};
@@ -121,15 +110,21 @@ class Inquiry extends CustomControl {
     const aiClassName = 
       options.aiClassName !== undefined ? options.aiClassName : 'ol-inquiry-area';
     
+    /** 
+     * Tip. 아이콘 변경
+     */
     const piLabel =
       options.piLabel !== undefined ? options.piLabel : '\u203A';
     const aiLabel =
       options.aiLabel !== undefined ? options.aiLabel : '\u00BB';
 
+    /**
+     * Tip. 툴팁 변경
+     */
     const piTipLabel =
-      options.piTipLabel !== undefined ? options.piTipLabel : 'Inquire point';
+      options.piTipLabel !== undefined ? options.piTipLabel : '포인트 조회';
     const aiTipLabel =
-      options.aiTipLabel !== undefined ? options.aiTipLabel : 'Inquire area';
+      options.aiTipLabel !== undefined ? options.aiTipLabel : '지역 조회';
 
     const piLabelNode =
       typeof piLabel === 'string' ? document.createTextNode(piLabel) : piLabel;
