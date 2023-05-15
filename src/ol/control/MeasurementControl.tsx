@@ -17,6 +17,7 @@ import VectorSource from 'ol/source/Vector';
 
 import OLContext from '../OLContext';
 import { getLayerById } from '../util';
+import CustomControl from './CustomControl';
 
 type Props = {
   options?: Options
@@ -78,9 +79,7 @@ type ControlSetOptions =
  * 참고1: md = measure distance의 약자 / ma = measure area의 약자
  * 참고2: Measurement class는 ol/control/Zoom class를 참고로 작성
  */
-class Measurement extends Control {
-
-  private id_: string;
+class Measurement extends CustomControl {
   
   private mdButton_: HTMLElement;
 
@@ -135,19 +134,15 @@ class Measurement extends Control {
 
   private status_: 'distance_measureing' | 'area_measureing' | 'none';
 
-  private useControlSet_ = false;
-
-  /**
-   * 세트명(아이디)
-   */
-  private setId_: string;
-
   constructor(options: Options) {
     options = options ? options : {};    
     
     super({
       element: document.createElement('div'),
       target: options.target,
+      useControlSet: options.useControlSet,
+      controlId: options.useControlSet && options.controlId,
+      setId: options.useControlSet && options.setId,
     })
 
     this.useDistance_ =
@@ -339,24 +334,6 @@ class Measurement extends Control {
     tooltips.forEach(tooltip => {
       tooltip.parentNode.removeChild(tooltip)
     })
-  }
-
-  /**
-   * 기존의 사용중인 컨트롤이 있는지 검사
-   */
-  private checkMultiple_() {
-    let multiple = false;
-    this.getMap().getControls().forEach((control) => {
-      if(control instanceof Control) {
-        if(control.get('set') === this.setId_ && control.get('id') !== this.id_) {
-          if(control.get('active')) {
-            return multiple = true
-          }
-        }
-      }
-    })
-
-    return multiple;
   }
 
   /**

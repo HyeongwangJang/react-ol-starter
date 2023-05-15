@@ -8,6 +8,7 @@ import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 
 import OLContext from '../OLContext';
 import Temp from '../interaction/Temp';
+import CustomControl from './CustomControl';
 
 type Props = {
   options?: Options
@@ -62,11 +63,11 @@ type ControlSetOptions =
  * @classdesc
  * 참고1: pi = point inquiry / ai = area inquiry의 약자임
  */
-class Inquiry extends Control {
+class Inquiry extends CustomControl {
 
   // inquiryEvent: Subject<number>;
 
-  private id_: string;
+  // private id_: string;
 
   private usePoint_: boolean;
 
@@ -88,12 +89,12 @@ class Inquiry extends Control {
 
   private dbclickzoom_: DoubleClickZoom;
 
-  private useControlSet_ = false;
+  // private useControlSet_ = false;
 
   /**
    * 세트명(아이디)
    */
-  private set_: string;
+  // private set_: string;
 
   constructor(options: Options) {
     options = options ? options : {};
@@ -101,6 +102,9 @@ class Inquiry extends Control {
     super({
       element: document.createElement('div'),
       target: options.target,
+      useControlSet: options.useControlSet,
+      controlId: options.useControlSet && options.controlId,
+      setId: options.useControlSet && options.setId,
     });
 
     this.usePoint_ =
@@ -183,14 +187,6 @@ class Inquiry extends Control {
           && this.helpTooltipElement_.classList.add('hidden');
       });
     }
-
-    if(options.useControlSet) {
-      this.set('set', options.setId)
-      this.set('id', options.controlId)
-      this.useControlSet_ = options.useControlSet
-      this.id_ = options.controlId
-      this.set_ = options.setId
-    }
   }
 
   /**
@@ -216,8 +212,6 @@ class Inquiry extends Control {
 
     if(this.useControlSet_) {
       const multiple = this.checkMultiple_();
-      console.log('CHECK MULTIPLE ?', multiple);
-      
       if(multiple) return;
     }
 
@@ -284,27 +278,6 @@ class Inquiry extends Control {
     if(this.dbclickzoom_) {
       this.getMap().removeInteraction(this.dbclickzoom_)
     }
-  }
-
-  /**
-   * 기존의 사용중인 컨트롤이 있는지 검사
-   */
-  private checkMultiple_() {
-    let multiple = false;
-    this.getMap().getControls().forEach((control) => {
-      if(control instanceof Control) {
-        if(control.get('set') === this.set_ && control.get('id') !== this.id_) {
-          console.log('나는 ㅊ자으면 안된다', control.get('id'));
-          if(control.get('active')) {
-            return multiple = true
-          }
-        }
-      }
-    })
-
-    console.log('CHECK MULTIPLE ==', multiple);
-    
-    return multiple;
   }
 
   private addInteraction_(type: 'point' | 'area') {
