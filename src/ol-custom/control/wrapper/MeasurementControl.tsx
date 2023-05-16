@@ -1,6 +1,7 @@
 import { FC, useContext, useEffect } from 'react';
-import Measurement, { Options } from '../Measurement'
-import OLContext from '../../OLContext';
+
+import OLContext from 'ol-custom/OLContext';
+import Measurement, { Options } from 'ol-custom/control/Measurement'
 
 type Props = {
   options?: Options

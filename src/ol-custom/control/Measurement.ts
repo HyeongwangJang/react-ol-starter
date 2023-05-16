@@ -14,9 +14,9 @@ import EventType from 'ol/events/EventType'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector';
 
-import { getLayerById } from '../util';
-import CustomControl, { ControlSetOptions } from './CustomControl';
-import { LAYER } from '../constants';
+import { getLayerById } from 'ol-custom/util';
+import { LAYER } from 'ol-custom/constants';
+import CustomControl, { ControlSetOptions } from 'ol-custom/control/CustomControl';
 
 export type Options = {
   className?: string

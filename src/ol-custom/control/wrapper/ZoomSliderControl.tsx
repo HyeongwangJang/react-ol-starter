@@ -2,7 +2,7 @@ import { FC, useContext, useEffect } from 'react';
 
 import ZoomSlider, { Options } from 'ol/control/ZoomSlider';
 
-import OLContext from '../../OLContext';
+import OLContext from 'ol-custom/OLContext';
 
 type Props = {
   options?: Options;

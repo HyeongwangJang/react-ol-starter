@@ -13,7 +13,10 @@ enum TempEventType {
   TEMPABORT = 'tempabort',
 }
 /**
- * @classdesc
+ * @classdesc TempEvent
+ * @extends {Event}
+ * 이벤트의 리턴 타입 중 feature에 임시로 any 추가해놨음.
+ * 추후 수정 필요
  */
 export class TempEvent extends Event {
 
@@ -80,6 +83,8 @@ class Temp extends PointerInteraction {
         } else {
           const polygon = drawEvt.feature.getGeometry();
           const extent = polygon.getExtent();
+
+          console.log('EXTENT::', extent);
 
           self.getMap().removeInteraction(self.draw);
 

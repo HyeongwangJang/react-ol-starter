@@ -3,8 +3,8 @@ import { DoubleClickZoom } from 'ol/interaction';
 import EventType from 'ol/events/EventType'
 import { CLASS_CONTROL, CLASS_UNSELECTABLE } from 'ol/css';
 
-import Temp from '../interaction/Temp';
-import CustomControl, { ControlSetOptions } from './CustomControl';
+import CustomControl, { ControlSetOptions } from 'ol-custom/control/CustomControl';
+import Temp from 'ol-custom/interaction/Temp';
 
 export type Options = {
   className?: string

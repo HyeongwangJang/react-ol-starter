@@ -1,13 +1,13 @@
 import OSM from 'ol/source/OSM';
 
-import Map from '../ol/map/Map';
-import LayerContainer from '../ol/layer/wrapper/LayerContainer';
-import TileLayer from '../ol/layer/wrapper/TileLayer';
+import Map from 'ol-custom/map/Map';
+import LayerContainer from 'ol-custom/layer/wrapper/LayerContainer';
+import TileLayer from 'ol-custom/layer/wrapper/TileLayer';
 
-import ControlContainer from '../ol/control/wrapper/ControlContainer';
-import FullScreenControl from '../ol/control/wrapper/FullScreenControl';
-import MeasurementControl from '../ol/control/wrapper/MeasurementControl';
-import InquiryControl from '../ol/control/wrapper/InquiryControl';
+import ControlContainer from 'ol-custom/control/wrapper/ControlContainer';
+import FullScreenControl from 'ol-custom/control/wrapper/FullScreenControl';
+import MeasurementControl from 'ol-custom/control/wrapper/MeasurementControl';
+import InquiryControl from 'ol-custom/control/wrapper/InquiryControl';
 
 const Example01 = () => {
 
