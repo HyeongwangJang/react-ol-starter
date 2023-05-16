@@ -9,6 +9,7 @@ import VectorSource from 'ol/source/Vector';
 
 import './Map.css';
 import OLContext from '../OLContext';
+import { LAYER } from '../constants';
 
 type Props = {
   children: ReactNode;
@@ -28,6 +29,7 @@ const Map: FC<Props> = (props) => {
 
     const layers = [];
 
+    // 거리/면적 측정용 measurement-layer 추가
     if (props.useMeasurementLayer) {
       const source = new VectorSource({
         features: [],
@@ -37,9 +39,10 @@ const Map: FC<Props> = (props) => {
         source: source,
         zIndex: 99,
       });
-      measurementLayer.set('id', 'measurement-layer');
+      measurementLayer.set('id', LAYER.measurement);
       layers.push(measurementLayer);
     }
+    // 그리기용 draw-layer 추가
     if (props.useDrawLayer) {
       const source = new VectorSource({
         features: [],
@@ -49,10 +52,16 @@ const Map: FC<Props> = (props) => {
         source: source,
         zIndex: 98,
       });
-      drawLayer.set('id', 'draw-layer');
+      drawLayer.set('id', LAYER.draw);
       layers.push(drawLayer);
     }
 
+    /**
+     * Tip. 여기에 기본 레이어(모든 맵에서 필수적으로 사용해야 하는 레이어)를 추가하세요.
+     */
+    // layers.push(새 레이어);
+
+    // create map
     const options = {
       view: new OLView({
         zoom: props.zoom,
@@ -60,9 +69,8 @@ const Map: FC<Props> = (props) => {
       }),
       layers: layers,
       controls: defaultControls(),
-      overlays: [],
+      // overlays: [],
     };
-
     const mapObject = new OLMap(options);
     mapObject.setTarget(mapRef.current);
     setMap(mapObject);
@@ -90,4 +98,5 @@ const Map: FC<Props> = (props) => {
     </OLContext.Provider>
   );
 };
+
 export default Map;

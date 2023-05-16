@@ -6,7 +6,11 @@ type Props = {
   options?: Options
 }
 
-// @ts-ignore
+/**
+ * @description
+ * MeasurementControl 사용시
+ * Map에서 useMeasurement를 활성화 해주세요.
+ */
 const MeasurementControl: FC<Props> = ({ options }) => {
   const { map } = useContext(OLContext);
 

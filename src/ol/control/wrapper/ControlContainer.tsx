@@ -1,13 +1,10 @@
-import { FC, ReactNode, useContext, useEffect, useState } from 'react';
-import OLContext from '../../OLContext';
+import { FC, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
 };
 
 const ControlContainer: FC<Props> = ({ children }) => {
-
-  const { map } = useContext(OLContext);
 
   return (
     <div>

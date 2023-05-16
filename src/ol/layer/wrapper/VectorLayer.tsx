@@ -4,7 +4,7 @@ import OLVectorLayer from 'ol/layer/Vector';
 import { Options } from 'ol/layer/BaseVector';
 import VectorSourceType from 'ol/source/Vector';
 
-import OLContext from '../OLContext';
+import OLContext from '../../OLContext';
 
 type Props = {
   options: Options<VectorSourceType>;

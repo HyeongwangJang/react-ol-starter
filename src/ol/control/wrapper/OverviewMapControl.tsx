@@ -2,12 +2,15 @@ import { FC, useContext, useEffect } from 'react';
 
 import OverviewMap, { Options } from 'ol/control/OverviewMap';
 
-import OLContext from '../OLContext';
+import OLContext from '../../OLContext';
 
 type Props = {
   options?: Options;
 };
 
+/**
+ * @example https://openlayers.org/en/latest/examples/overviewmap.html
+ */
 const OverviewMapControl: FC<Props> = ({ options = {} }) => {
   const { map } = useContext(OLContext);
 

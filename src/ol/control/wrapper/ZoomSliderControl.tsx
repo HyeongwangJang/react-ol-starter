@@ -2,12 +2,15 @@ import { FC, useContext, useEffect } from 'react';
 
 import ZoomSlider, { Options } from 'ol/control/ZoomSlider';
 
-import OLContext from '../OLContext';
+import OLContext from '../../OLContext';
 
 type Props = {
   options?: Options;
 };
 
+/**
+ * @example https://openlayers.org/en/latest/examples/zoomslider.html
+ */
 const ZoomSliderControl: FC<Props> = ({ options = {} }) => {
   const { map } = useContext(OLContext);
 

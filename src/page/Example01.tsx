@@ -10,7 +10,12 @@ import MeasurementControl from '../ol/control/wrapper/MeasurementControl';
 import InquiryControl from '../ol/control/wrapper/InquiryControl';
 
 const Example01 = () => {
-  
+
+  /**
+   * Tip.
+   * 레이어는 Layer Container 안에
+   * 컨트롤은 Control Container 안에 넣어주세요.
+   */
   return (
     <div>
       <Map

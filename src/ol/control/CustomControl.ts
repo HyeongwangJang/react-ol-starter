@@ -6,7 +6,11 @@ export type Options = {
 } & ControlSetOptions
 
 /**
- * controlSet는 ...
+ * @classdesc CustomControl
+ * @extends {Control}
+ * 컨트롤 세트를 적용하려면 CustomControl을 상속 받아야 함.
+ * 컨트롤 세트란 중복으로 활성화되면 안되는 컨트롤들을 세트로 묶어서 중복 활성화를 방지하는 것임
+ * @example Example01
  */
 export type ControlSetOptions =
   { useControlSet?: true; controlId: string; setId: string }

@@ -14,7 +14,9 @@ const InquiryControl: FC<Props> = ({ options }) => {
     if (!map) return;
 
     (options as Options).map = map
+
     const control = new Inquiry(options);
+    
     map.addControl(control);
     
     return () => {

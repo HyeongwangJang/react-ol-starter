@@ -16,6 +16,7 @@ import VectorSource from 'ol/source/Vector';
 
 import { getLayerById } from '../util';
 import CustomControl, { ControlSetOptions } from './CustomControl';
+import { LAYER } from '../constants';
 
 export type Options = {
   className?: string
@@ -44,7 +45,7 @@ export type Options = {
  * 참고2: Measurement class는 ol/control/Zoom class를 참고로 작성
  */
 class Measurement extends CustomControl {
-  
+
   private mdButton_: HTMLElement;
 
   private maButton_: HTMLElement;
@@ -286,7 +287,7 @@ class Measurement extends CustomControl {
    */
   private handleEraserClick_() {
     // erase features
-    const layer = getLayerById<VectorLayer<VectorSource>>(this.getMap(), 'measurement-layer')
+    const layer = getLayerById<VectorLayer<VectorSource>>(this.getMap(), LAYER.measurement)
     const features = layer.getSource().getFeatures();
     features.forEach(fe => {
       layer.getSource().removeFeature(fe)
@@ -357,7 +358,7 @@ class Measurement extends CustomControl {
     const type = measureType === 'area' ? 'Polygon' : 'LineString';
     const map = this.getMap();
     const source = 
-      getLayerById<VectorLayer<VectorSource>>(map, 'measurement-layer')
+      getLayerById<VectorLayer<VectorSource>>(map, LAYER.measurement)
       .getSource();
 
     this.draw_ = new Draw({

@@ -2,6 +2,9 @@ import Map from 'ol/Map';
 import { Group } from 'ol/layer';
 import BaseLayer from 'ol/layer/Base';
 
+/**
+ * layer id로 레이어 get
+ */
 export function getLayerById<T extends BaseLayer>(
   map: Map,
   layerId: string

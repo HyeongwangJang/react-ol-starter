@@ -24,14 +24,12 @@ export type Options = {
 } & ControlSetOptions
 
 /**
- * @classdesc
- * 참고1: pi = point inquiry / ai = area inquiry의 약자임
+ * @classdesc Inquiry
+ * @extends {CustomControl}
+ * pi = point inquiry(포인트 조회) / ai = area inquiry(영역 조회)의 약자.
+ * 포인트 혹은 지역을 선택해서 해당하는 곳의 피쳐 정보들을 반환해주는 컨트롤
  */
 class Inquiry extends CustomControl {
-
-  // inquiryEvent: Subject<number>;
-
-  // private id_: string;
 
   private usePoint_: boolean;
 
@@ -52,9 +50,9 @@ class Inquiry extends CustomControl {
   private status_: 'point_inquirying' | 'area_inquirying' | 'none'
 
   /**
-   * 지역 조회 사용 시,
-   * draw가 끝난 후 dbclickzoom이 발생하여 임의로 비활성화 했다가
-   * 다시 추가해주어야 한다.
+   * 영역 조회 사용 시,
+   * draw가 끝난 후 dbclickzoom이 발생하기 때문에
+   * 임의로 비활성화 했다가 다시 추가해주어야 함!
    */
   private dbclickzoom_: DoubleClickZoom;
 
@@ -97,7 +95,7 @@ class Inquiry extends CustomControl {
     const piTipLabel =
       options.piTipLabel !== undefined ? options.piTipLabel : '포인트 조회';
     const aiTipLabel =
-      options.aiTipLabel !== undefined ? options.aiTipLabel : '지역 조회';
+      options.aiTipLabel !== undefined ? options.aiTipLabel : '영역 조회';
 
     const piLabelNode =
       typeof piLabel === 'string' ? document.createTextNode(piLabel) : piLabel;
