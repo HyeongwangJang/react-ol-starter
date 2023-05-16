@@ -2,7 +2,7 @@ import { ReactNode, FC, useContext, useEffect, useState } from "react";
 
 import OLVectorTileLayer, { Options } from "ol/layer/VectorTile";
 
-import OLContext from "ol-custom/OLContext";
+import OLContext from "src/ol-custom/OLContext";
 
 type Props = {
   children: ReactNode;

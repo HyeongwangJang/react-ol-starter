@@ -4,7 +4,7 @@ import OLTileLayer from 'ol/layer/Tile';
 import { Options } from 'ol/layer/BaseTile';
 import TileSourceType from 'ol/source/Tile';
 
-import OLContext from 'ol-custom/OLContext';
+import OLContext from 'src/ol-custom/OLContext';
 
 type Props = {
   options: Options<TileSourceType>;

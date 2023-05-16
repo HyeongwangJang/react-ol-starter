@@ -84,6 +84,7 @@ class Temp extends PointerInteraction {
           const polygon = drawEvt.feature.getGeometry();
           const extent = polygon.getExtent();
 
+          console.log('POLYGON::', polygon);
           console.log('EXTENT::', extent);
 
           self.getMap().removeInteraction(self.draw);

@@ -7,9 +7,10 @@ import { Coordinate } from 'ol/coordinate';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 
-import 'ol-custom/Map.css';
-import OLContext from 'ol-custom/OLContext';
-import { LAYER } from 'ol-custom/constants';
+import OLContext from 'src/ol-custom/OLContext';
+import { LAYER } from 'src/ol-custom/constants';
+
+import './Map.css';
 
 type Props = {
   children: ReactNode;

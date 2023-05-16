@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 
 import { FullScreen } from 'ol/control';
 
-import OLContext from 'ol-custom/OLContext';
+import OLContext from 'src/ol-custom/OLContext';
 
 // @ts-ignore
 const FullScreenControl = () => {

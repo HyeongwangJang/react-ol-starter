@@ -2,7 +2,7 @@ import { FC, useContext, useEffect } from 'react';
 
 import OverviewMap, { Options } from 'ol/control/OverviewMap';
 
-import OLContext from 'ol-custom/OLContext';
+import OLContext from 'src/ol-custom/OLContext';
 
 type Props = {
   options?: Options;

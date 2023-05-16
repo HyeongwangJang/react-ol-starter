@@ -1,7 +1,7 @@
 import { FC, useContext, useEffect } from 'react';
 
-import OLContext from 'ol-custom/OLContext';
-import Inquiry, { Options } from 'ol-custom/control/Inquiry'
+import OLContext from 'src/ol-custom/OLContext';
+import Inquiry, { Options } from 'src/ol-custom/control/Inquiry'
 
 type Props = {
   options?: Options

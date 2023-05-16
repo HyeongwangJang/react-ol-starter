@@ -3,8 +3,8 @@ import { FC, useContext, useEffect } from "react";
 import OLVectorTileLayer from "ol/layer/VectorTile";
 import OLVectorTileSource, { Options } from 'ol/source/VectorTile'
 
-import OLContext from "ol-custom/OLContext";
-import { getLayerById } from "ol-custom/util";
+import OLContext from "src/ol-custom/OLContext";
+import { getLayerById } from "src/ol-custom/util";
 
 type Props = {
   options: Options
