@@ -3,7 +3,6 @@ import { ReactNode, useRef, useState, useEffect, FC } from 'react';
 import OLMap from 'ol/Map';
 import OLView from 'ol/View';
 import { defaults as defaultControls } from 'ol/control';
-import { Projection } from 'ol/proj';
 import { Coordinate } from 'ol/coordinate';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -17,7 +16,7 @@ type Props = {
   children: ReactNode;
   zoom: number;
   center: Coordinate;
-  proj?: Projection
+  proj?: string
   useMeasurementLayer: boolean;
   useDrawLayer: boolean;
 };
