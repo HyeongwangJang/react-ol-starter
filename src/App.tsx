@@ -1,33 +1,29 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { ReactNode, useEffect, useState } from 'react';
 
 import proj4 from 'proj4';
-import { get } from 'ol/proj';
 import { register } from 'ol/proj/proj4';
 
 import 'ol/ol.css';
 import './App.css';
 
-function App() {
+type Props = {
+  children: ReactNode
+}
+
+function App({ children }: Props) {
+
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    proj4.defs([
-      ['EPSG:5186', '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=600000 +ellps']
-    ]);
+    proj4.defs("EPSG:5186", "+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=600000 +ellps=GRS80 +units=m +no_defs");
     register(proj4);
+
+    setReady(true)
   }, [])
   
   return (
     <div>
-      <h1>목차</h1>
-      <ul>
-        <li>
-          <Link to={'/example1'}>Example1: 우리가 누구인가</Link>
-        </li>
-        <li>
-          <Link to={'example2'}>Example2: 우리는 소망한다</Link>
-        </li>
-      </ul>
+      {ready && children}
     </div>
   );
 }
