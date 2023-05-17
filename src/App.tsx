@@ -1,9 +1,22 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import './App.css';
+import proj4 from 'proj4';
+import { get } from 'ol/proj';
+import { register } from 'ol/proj/proj4';
+
 import 'ol/ol.css';
+import './App.css';
 
 function App() {
+
+  useEffect(() => {
+    proj4.defs([
+      ['EPSG:5186', '+proj=tmerc +lat_0=38 +lon_0=127 +k=1 +x_0=200000 +y_0=600000 +ellps']
+    ]);
+    register(proj4);
+  }, [])
+  
   return (
     <div>
       <h1>목차</h1>
