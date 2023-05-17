@@ -17,12 +17,9 @@ const VectorTileSource: FC<Props> = (props) => {
   useEffect(() => {
     if(!map) return
     
-    
     const layer = getLayerById<OLVectorTileLayer>(map, props.layerId);
     const source = new OLVectorTileSource(props.options)
     
-    console.log('layer ~~~', layer);
-    console.log('source ~~~', source);
     layer.setSource(source)
   }, [map, props])
 

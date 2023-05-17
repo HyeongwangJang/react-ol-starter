@@ -11,8 +11,10 @@ import ControlContainer from 'src/ol-custom/control/wrapper/ControlContainer';
 import FullScreenControl from 'src/ol-custom/control/wrapper/FullScreenControl';
 import MeasurementControl from 'src/ol-custom/control/wrapper/MeasurementControl';
 import InquiryControl from 'src/ol-custom/control/wrapper/InquiryControl';
+import { PROJ } from 'src/ol-custom/constants';
 
 const Example02 = () => {
+
   return (
     <Map
       zoom={5}
